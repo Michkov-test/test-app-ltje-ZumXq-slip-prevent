@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/instance: test-component-yvwi
     spec:
       containers:
-      - image: quay.io/mkovarik/test-images:21c7b79afd4f42259f0cb3c5c94aa701
+      - image: quay.io/mkovarik/test-images@sha256:31f025b17b8d50fd05ebf66087ca74f2af05109bef843635444a5139891fd174
         imagePullPolicy: Always
         livenessProbe:
           httpGet:

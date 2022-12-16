@@ -33,14 +33,17 @@ spec:
       - name: git-url
         value: https://github.com/redhat-appstudio-qe/devfile-sample-python-basic.git
       - name: output-image
-        value: quay.io/mkovarik/test-images:21c7b79afd4f42259f0cb3c5c94aa701-$(tt.params.git-revision)
+        value: quay.io/mkovarik/test-images@sha256:31f025b17b8d50fd05ebf66087ca74f2af05109bef843635444a5139891fd174-$(tt.params.git-revision)
       - name: dockerfile
         value: docker/Dockerfile
       - name: path-context
         value: .
       pipelineRef:
-        bundle: quay.io/redhat-appstudio/hacbs-templates-bundle:13f5d9c921b3f727684a00084037f673a0dc4273
+        bundle: quay.io/redhat-appstudio/build-templates-bundle:13f5d9c921b3f727684a00084037f673a0dc4273
         name: docker-build
+      podTemplate:
+        imagePullSecrets:
+        - name: redhat-appstudio-registry-pull-secret
       workspaces:
       - name: workspace
         volumeClaimTemplate:
@@ -53,5 +56,8 @@ spec:
               requests:
                 storage: 1Gi
           status: {}
+      - name: registry-auth
+        secret:
+          secretName: redhat-appstudio-registry-pull-secret
     status: {}
 status: {}
