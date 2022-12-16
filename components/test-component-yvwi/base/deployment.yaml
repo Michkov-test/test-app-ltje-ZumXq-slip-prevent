@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/created-by: application-service
+    app.kubernetes.io/instance: test-component-yvwi
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: test-component-yvwi
+    app.kubernetes.io/part-of: test-app-ltje
+  name: test-component-yvwi
+  namespace: build-e2e-hacbs-sabe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: test-component-yvwi
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: test-component-yvwi
+    spec:
+      containers:
+      - image: quay.io/mkovarik/test-images:21c7b79afd4f42259f0cb3c5c94aa701
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        name: container-image
+        ports:
+        - containerPort: 8081
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          tcpSocket:
+            port: 8081
+        resources: {}
+status: {}
